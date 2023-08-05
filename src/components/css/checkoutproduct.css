@@ -1,0 +1,35 @@
+.checkoutimage{
+    height: 200px;
+    width: 200px;
+}
+.checkoutproduct{
+    display: flex;
+    padding: 10px;
+
+    margin: 10px;
+    width: max-content;
+    
+}
+
+.checkoutproduct_info{
+    padding-left: 10px;
+    max-width: 250px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.product_stars{
+    display: flex;
+}
+
+.checkout_button{
+    
+        display: block;
+        width: max-content;
+        padding: 5px 10px;
+    
+        background: rgb(232, 180, 84);
+        border: 1px solid;  
+        border-color: rgb(108, 87, 47)  rgb(108, 87, 47)  rgb(108, 87, 47);
+}

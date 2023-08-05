@@ -1,6 +1,12 @@
-# Getting Started with Create React App
+ # Deployment (using firebase hosting ) at :
+ 
+ https://clone-1aaf7.web.app/
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+This is a react app made with using tech stack:
+React (v 18.2.0)
+Firebase (v 10.1.0)
+Node js (v ...) 
 
 ## Available Scripts
 

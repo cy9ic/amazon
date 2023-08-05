@@ -31,7 +31,7 @@ export default function Header() {
       </div>
 
       <div className="navbar_options">
-        <Link to={!user && '/login'}>
+        <Link className="sign_link" to={!user && '/login'}>
         <div onClick={handleAuthetication} className="header_option">
                 <span className="navbar_option_1">
                     Hello User!

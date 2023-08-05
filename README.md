@@ -4,8 +4,11 @@
 
 
 This is a react app made with using tech stack :
+
 React (v 18.2.0)
+
 Firebase (v 10.1.0)
+
 Node js (v ...) 
 
 ## Available Scripts

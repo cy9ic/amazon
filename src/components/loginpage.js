@@ -11,13 +11,17 @@ export default function Loginpage() {
   const [password, setpassword] = useState('')
   const signin = e=>{
     e.preventDefault();
+
     
+
     // Firebase Login now
     auth.signInWithEmailAndPassword(email , password)
     .then(auth=>{
       history('/')
+    }).catch(error=>{
+      alert(error);
 
-    }).catch(error=>{console.alert(error)})
+    })
     
   }
   const register=()=>{

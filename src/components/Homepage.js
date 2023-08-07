@@ -1,7 +1,10 @@
 import React from "react";
+
 import "./css/home.css";
 import Product from "./product";
+
 export default function Homepage() {
+
   return (
     <div className="home">
       <div className="home_container">

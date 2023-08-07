@@ -1,6 +1,5 @@
 // React context api 
 
-
 import React, {createContext,useContext, useReducer} from "react";
 
 export const StateContext = createContext(); //Preparing the data layer. 
@@ -11,6 +10,7 @@ export const StateProvider = ({reducer, initialState, children})=>(
     {children}
     </StateContext.Provider>
 );
+
 
 
 // This pulls out the info from the contextState

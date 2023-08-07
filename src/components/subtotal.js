@@ -19,8 +19,6 @@ export default function Subtotal() {
                 </small>
                 
                 </>
-                
-        
         )}
 
         decimalScale={2}

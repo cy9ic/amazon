@@ -1,0 +1,40 @@
+.payment{
+    background-color: whitesmoke;
+}
+.payment_container > h1{
+    font-weight: 500;
+    text-align: center;
+    
+    align-self: center;
+    background-color: rgb(217, 218, 220);
+    border: 1px solid lightgray;
+    
+}
+
+
+.payment_container > h1 a {
+    text-decoration: none;
+}
+
+.payment_section{
+    display: flex;
+    border: 1px solid lightgray;
+    padding: 20px
+    
+}
+
+.payment_title{
+    flex: 0.2;
+}
+
+.payment_address , .payment_items, .payment_details{
+    flex: 0.8;
+}
+
+.payment_address{
+    margin-left: 30px;
+}
+
+/* button{
+    color: black;
+} */

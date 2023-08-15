@@ -34,7 +34,7 @@ export default function Header() {
         <Link className="sign_link" to={!user && '/login'}>
         <div onClick={handleAuthetication} className="header_option">
                 <span className="navbar_option_1">
-                    Hello User!
+                    Hello {!user?'Guest':user.email}
                 </span>
                 <span className="navbar_option_2">
                     {user?'Sign Out':'Sign In'}

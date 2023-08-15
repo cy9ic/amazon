@@ -5,15 +5,15 @@
 .checkoutproduct{
     display: flex;
     padding: 10px;
-
     margin: 10px;
-    width: max-content;
+    /* width: max-content; */
     
 }
 
 .checkoutproduct_info{
     padding-left: 10px;
-    max-width: 250px;
+    
+    max-width: 900px;
     display: flex;
     flex-direction: column;
     justify-content: space-around;

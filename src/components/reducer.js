@@ -1,6 +1,7 @@
 export const initialState = {
     basket: [],
-    user:null
+    user:null,
+    
 };
 
 export const getBaskeTotal  = (basket) => {

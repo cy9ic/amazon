@@ -2,12 +2,13 @@ import React, { useEffect, useState } from 'react'
 import { useStateValue } from './components/Stateprovider'
 import CheckoutProduct from './components/checkoutproduct';
 import { DashboardSharp, InsertEmoticon } from '@mui/icons-material';
-import { Link } from 'react-router-dom';
+import { Link ,useNavigate } from 'react-router-dom';
 import './components/css/payment.css'
 import { useElements, useStripe } from '@stripe/react-stripe-js';
 import CurrencyFormat from 'react-currency-format';
 import { CardElement } from '@stripe/react-stripe-js';
 import { getBaskeTotal } from './components/reducer';
+import axios from 'axios';
 export default function Payment() {
     const [{basket, user}, dispatch] = useStateValue();
     const element = useElements();
@@ -16,12 +17,16 @@ export default function Payment() {
     const [succeded , setSucceded ] = useState(false)
     const [disabled, setDisabled] = useState(true)
     const [clientSecret , setClient] = useState(true)
-
+    const history = useNavigate();
 
     useEffect(()=>{
             // to charge the user
             const getClientSecret = async ()=>{
-                const response = await axios;
+                const response = await axios({
+                    method:'post',
+                    url:`/payments/create?total =${getBaskeTotal(basket)*100}`
+                });
+                setClient(response.data.clientSecret)
             }
             getClientSecret();
     },[basket])
@@ -31,7 +36,15 @@ export default function Payment() {
 
         e.preventDefault()
         setProcessing(true)
-        const payload = await(stripe.confirmdeta)
+        const payload = await stripe.confirmCardPayment(clientSecret,{payment_method:{
+            card : element.getElement(CardElement)
+        }}).then(({paymentIntent})=>{
+            //paymentIntenet = payment confirmation
+            setSucceded(true);
+            setError(null);
+            setProcessing(false);
+            history("/orders")
+        })
         
  
     }

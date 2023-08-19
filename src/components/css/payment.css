@@ -35,6 +35,18 @@
     margin-left: 30px;
 }
 
+.payment_details{
+    max-width: 400px;
+}
+
+
+.payment_pricecontainer{
+    padding-top: 20px;
+}
+.payment_button{
+    margin-top: 10px;
+}
 /* button{
+
     color: black;
 } */

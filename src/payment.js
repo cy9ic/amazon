@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import { useStateValue } from './components/Stateprovider'
 import CheckoutProduct from './components/checkoutproduct';
-import { DashboardSharp, InsertEmoticon } from '@mui/icons-material';
 import { Link ,useNavigate } from 'react-router-dom';
 import './components/css/payment.css'
 import { useElements, useStripe } from '@stripe/react-stripe-js';
 import CurrencyFormat from 'react-currency-format';
 import { CardElement } from '@stripe/react-stripe-js';
 import { getBaskeTotal } from './components/reducer';
-import axios from 'axios';
+import { db } from './firebase';
+import instance from './axios';
+import { dblClick } from '@testing-library/user-event/dist/click';
 export default function Payment() {
     const [{basket, user}, dispatch] = useStateValue();
     const element = useElements();
@@ -16,38 +17,92 @@ export default function Payment() {
     const [processing , setProcessing ] = useState("")
     const [succeded , setSucceded ] = useState(false)
     const [disabled, setDisabled] = useState(true)
-    const [clientSecret , setClient] = useState(true)
+    const [clientSecret , setClient] = useState(null)
     const history = useNavigate();
+    const stripe = useStripe(); 
 
     useEffect(()=>{
-            // to charge the user
+            
             const getClientSecret = async ()=>{
-                const response = await axios({
+                const response = await instance({
                     method:'post',
-                    url:`/payments/create?total =${getBaskeTotal(basket)*100}`
+                    url:`/payments/create?total=${getBaskeTotal(basket)*100}`
                 });
+                
                 setClient(response.data.clientSecret)
+                
             }
             getClientSecret();
-    },[basket])
+            console.log("Running")
+        
+        },[basket])
 
-    const stripe = useStripe();
-    const handleSubmit = async (e)=>{
+
+
+
+
+        console.log(clientSecret);
+        
+        const handleSubmit = async (e)=>{
 
         e.preventDefault()
         setProcessing(true)
-        const payload = await stripe.confirmCardPayment(clientSecret,{payment_method:{
-            card : element.getElement(CardElement)
-        }}).then(({paymentIntent})=>{
-            //paymentIntenet = payment confirmation
-            setSucceded(true);
-            setError(null);
-            setProcessing(false);
-            history("/orders")
-        })
         
- 
-    }
+    
+        const payload = await stripe
+        .confirmCardPayment(clientSecret, {
+          payment_method: {
+            card: element.getElement(CardElement),
+            billing_details: {
+              name: 'Jenny Rosen',
+              address: {
+                line1: '1 Main street',
+                city: 'San Francisco',
+                postal_code: '90210',
+                state: 'CA',
+                country: 'US',
+              },
+            },
+          },
+          shipping: {
+            name: 'Jenny Shipping',
+            address: {
+              line1: '1 Main street',
+              city: 'San Francisco',
+              postal_code: '90210',
+              state: 'CA',
+              country: 'US',
+            },
+            
+          },
+        }
+            ).then(({paymentIntent})=>{
+                // paymentIntenet = payment confirmation
+                db.collection('users')
+                .doc(user?.uid)
+                .collection('orders')
+                .doc(paymentIntent.id)
+                .set({
+                    basket:basket,
+                    amount:paymentIntent.amount,
+                    created:paymentIntent.created
+                })
+                setSucceded(true);
+                setError(null);
+    
+                
+                setProcessing(false);
+                dispatch({
+                    type :"EMPTY_BASKET"
+                })
+                
+                history('/orders')
+                
+            })
+            
+        }
+
+       
 
     const handleChange = e =>{
         // Listen to changes in the card element.
@@ -120,7 +175,7 @@ export default function Payment() {
                             prefix='$'
                             />
 
-                            <button disabled={processing|| disabled || succeded}>
+                            <button className='payment_button'  disabled={processing || disabled || succeded}>
                                 <span>{processing? <p>Processing</p>:"Buy Now"}</span>
                             </button>
                         </div>

@@ -19,11 +19,8 @@ export default function Checkout() {
       key={index}
       image ={item.image} title={item.title} price={item.price} rating={item.rating} id={item.id}/>
     ))}
-
         </div>
-
         <div className='checkout_right'>
-          
             <Subtotal/>
         </div>
     </div>

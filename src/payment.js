@@ -41,7 +41,6 @@ export default function Payment() {
 
 
 
-        console.log(clientSecret);
         
         const handleSubmit = async (e)=>{
 
